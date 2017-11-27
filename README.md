@@ -9,6 +9,7 @@ You can use the DbSet<T>.AddOrUpdate() helper extension method
 to avoid creating duplicate seed data. E.g.
 
 In the Package Manager Console window, type the following commands after changing seed data :
+
 Add-Migration Initial
 Update-Database
 
