@@ -225,10 +225,6 @@
     </Compile>
     <Compile Include="Helper\MVCStringHelper.cs" />
     <Compile Include="Hubs\BankingHub.cs" />
-    <Compile Include="Migrations\201711230750463_Initial.cs" />
-    <Compile Include="Migrations\201711230750463_Initial.Designer.cs">
-      <DependentUpon>201711230750463_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Bank.cs" />
@@ -1108,11 +1104,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711230750463_Initial.resx">
-      <DependentUpon>201711230750463_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
