@@ -225,6 +225,10 @@
     </Compile>
     <Compile Include="Helper\MVCStringHelper.cs" />
     <Compile Include="Hubs\BankingHub.cs" />
+    <Compile Include="Migrations\201711270053076_Initial.cs" />
+    <Compile Include="Migrations\201711270053076_Initial.Designer.cs">
+      <DependentUpon>201711270053076_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Bank.cs" />
@@ -1107,6 +1111,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711270053076_Initial.resx">
+      <DependentUpon>201711270053076_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
