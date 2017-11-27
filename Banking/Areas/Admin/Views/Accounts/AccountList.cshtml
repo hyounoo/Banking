@@ -1,0 +1,214 @@
+﻿@model Banking.Areas.Admin.ViewModels.AccountSearchViewModel
+@using X.PagedList.Mvc;
+@using X.PagedList;
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Accounts", FormMethod.Get, new { id = "SearchForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.AccountNumber, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })                    
+                @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.ClientName, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.CurrencyId, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.CurrencyId, null, "Select", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.MinBalance, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.MinBalance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MinBalance, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.MaxBalance, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.MaxBalance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaxBalance, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-small btn-primary" id="searchMessage" />
+        </div>
+
+    </div>
+}
+
+<div id="resultDiv">
+    @Html.ActionLink("Create", "Edit", null, htmlAttributes: new { @class = "btn btn-small btn-primary pull-right" })
+    <br />
+    <br />
+    <p>
+        <span class="pull-left" style="margin-top: 7px;">Page @(Model.AccountList.PageCount < Model.AccountList.PageNumber ? 0 : Model.AccountList.PageNumber) of @Model.AccountList.PageCount</span>
+        <span class="pull-right" style="margin-top: 7px;">
+            Total: @Model.AccountList.TotalItemCount Records
+        </span>
+    </p>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("AccountNumber", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.AccountNumberSortParameter
+           })
+            </th>
+            <th>
+                @Html.ActionLink("Title", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.TitleSortParameter
+           })
+            </th>
+            <th>
+                @Html.ActionLink("Client Name", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.ClientNameSortParameter
+           })
+            </th>
+            <th>
+                @Html.ActionLink("Balance", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.BalanceSortParameter
+           })
+            </th>
+
+            <th>
+                @Html.ActionLink("Currency", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.CurrencySortParameter
+           })
+            </th>
+            <th>
+                @Html.ActionLink("Created Date", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.CreatedDateSortParameter
+           })
+            </th>
+            <th>
+                @Html.ActionLink("Modified Date", "Index", new
+           {
+               Model.page,
+               Model.AccountNumber,
+               Model.Title,
+               Model.ClientName,
+               Model.MinBalance,
+               Model.MaxBalance,
+               Model.CurrencyId,
+               SortParameter = Model.ModifiedDateSortParameter
+           })
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.AccountList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => ((SelectList)ViewData["CurrencyId"]).SingleOrDefault(rc => rc.Value == item.CurrencyId.ToString()).Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="ListPager">
+        @Html.PagedListPager(Model.AccountList, page => Url.Action("Index", new { page, Model.AccountNumber, Model.Title, Model.ClientName, Model.MinBalance, Model.MaxBalance, Model.CurrencyId, Model.SortParameter }))
+    </div>
+</div>

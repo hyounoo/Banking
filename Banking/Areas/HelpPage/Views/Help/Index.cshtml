@@ -1,0 +1,83 @@
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using System.Collections.ObjectModel
+@using Banking.Areas.HelpPage.Models
+@model Collection<ApiDescription>
+
+@{
+    ViewBag.Title = "ASP.NET Web API Help Page";
+
+    // Group APIs by controller
+    ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
+}
+
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+<header class="help-page">
+    <div class="content-wrapper">
+        <div class="float-left">
+            <h1>@ViewBag.Title</h1>
+        </div>
+    </div>
+</header>
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <h2>Introduction</h2>
+            <p>
+                This Web API contains 3 sections. Accounts, Clients and Currencies.
+                <br />
+                Each section provides genral CRUD operations(GET, PUT, POST, DELETE).
+                <br />
+                Accounts API provides additional methods Balance, Deposit, and Withdraw.
+                <br />
+                Service response of above three(Balance, Deposit, Withdraw) methods contains following properties.
+                
+                <table class="table">
+                    <tr>
+                        <th>Parameter Name</th>
+                        <th>Data Type</th>
+                        <th>Required</th>
+                        <th>Comment</th>
+                    </tr>
+                    <tr>
+                        <td>AccountNumber</td>
+                        <td>Integer(8)</td>
+                        <td>Yes</td>
+                        <td>An identifier used to uniquely identify a single account.</td>
+                    </tr>
+                    <tr>
+                        <td>Successful</td>
+                        <td>bool</td>
+                        <td>Yes</td>
+                        <td>If true, the request succeeded and the required action was performed, otherwise false.</td>
+                    </tr>
+                    <tr>
+                        <td>Balance</td>
+                        <td>Decimal</td>
+                        <td>No</td>
+                        <td>The current available balance after the action was performed. Can be omitted or null if Successful=false.</td>
+                    </tr>
+                    <tr>
+                        <td>Currency</td>
+                        <td>String(3)</td>
+                        <td>No</td>
+                        <td>The currency of the current available balance after the deposit was made, Can be omitted or null if Successful=false.</td>
+                    </tr>
+                    <tr>
+                        <td>Message</td>
+                        <td>String(1024)</td>
+                        <td>Yes</td>
+                        <td>A message detailing the outcome of the operation. If the request failed, this should detail why.</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        @foreach (var group in apiGroups)
+        {
+            @Html.DisplayFor(m => group, "ApiGroup")
+        }
+    </section>
+</div>

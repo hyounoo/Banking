@@ -1,0 +1,9 @@
+﻿@model Banking.Areas.Admin.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = Model.Id != 0 ? "Edit" : "Create";
+}
+
+<div id="ACCOUNT_EDIT_DIV">
+    @Html.Partial("AccountEdit", Model)
+</div>

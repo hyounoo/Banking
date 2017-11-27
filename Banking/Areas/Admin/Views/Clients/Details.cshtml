@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Client";
+}
+
+<div ng-controller="ClientController">
+    <h2>Client {{ model.clientName }}</h2>
+
+    <select class="form-control"
+            ng-show="model.connectionId"
+            ng-model="model.selectedAccount"
+            ng-change="fn.selectedAccountChanged()"
+            ng-options="item as item.Title for item in model.accounts">
+        <option value="">Select Account</option>
+    </select>
+    <div ng-show="model.selectedAccount">
+        <br />
+        <p>Account number: {{model.selectedAccount.AccountNumber}}</p>
+        <p>Account balance: {{model.selectedAccount.Balance | currency: model.selectedAccountCurrency.CurrencyCode}}</p>
+        <input class="form-control" type="text" placeholder="Enter amount" ng-model="model.amount" />
+        <br />
+        <button class="btn btn-sm" ng-click="fn.balance();">Check Balance</button>
+        <button class="btn btn-sm" ng-click="fn.deposit(model.selectedAccount.AccountNumber, model.selectedAccount.Title, model.amount);" ng-disabled="model.amount == null || model.amount.length == 0">Deposit</button>
+        <button class="btn btn-sm" ng-click="fn.withdraw(model.selectedAccount.AccountNumber, model.selectedAccount.Title, model.amount);" ng-disabled="model.amount == null || model.amount.length == 0">Withdraw</button>
+        <br />
+        <br />
+        <input class="form-control" type="text" placeholder="Account number" ng-model="model.transferAccountNumber" />
+
+        <select class="form-control" ng-disabled="model.transferAccountNumber == null || model.transferAccountNumber == ''"
+                ng-model="model.selectedCurrency"
+                ng-options="item as item.CurrencyCode for item in model.currencies"></select>
+        <input class="form-control" type="text" placeholder="Transfer amount" ng-model="model.transferAmount" ng-disabled="model.transferAccountNumber == null || model.transferAccountNumber == ''" />
+
+        <br />
+        <button class="btn btn-sm" ng-click="fn.transfer();" ng-disabled="model.transferAccountNumber == null || model.transferAccountNumber.length == 0 || model.transferAmount == 0 || model.transferAmount == null">Transfer</button>
+    </div>
+</div>
+<br />
+<ul id="messages"></ul>
+
+<div style="display:none">
+    @AntiForgery.GetHtml()
+    <textarea id="ClientId" ng-non-bindable>@Html.Raw(Json.Encode(ViewData["ClientId"]))</textarea>
+</div>
+
+<style>
+    input[type=text]::-ms-clear {
+        display: none;
+    }
+</style>
+
+
+@section scripts {
+    <script type="text/javascript">var rootPath = '@Url.Content("~")'</script>
+    <!--Angular script to update the client page and send messages.-->
+    <script src="~/App/Controllers/ClientController.js"></script>
+}

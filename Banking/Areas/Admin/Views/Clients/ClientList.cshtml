@@ -1,0 +1,122 @@
+﻿@model Banking.Areas.Admin.ViewModels.ClientSearchViewModel
+@using X.PagedList.Mvc;
+@using X.PagedList;
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Client", FormMethod.Get, new { id = "SearchForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table-condensed">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ClientName, htmlAttributes: new { @class = "control-label" })
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-small btn-primary" id="searchMessage" />
+                </td>                
+            </tr>
+        </table>
+    </div>
+}
+
+<div id="resultDiv">
+    @Html.ActionLink("Create", "Edit", null, htmlAttributes: new { @class = "btn btn-small btn-primary pull-right" })    
+    <br />
+    <br />
+    <p>
+        <span class="pull-left" style="margin-top: 7px;">Page @(Model.ClientList.PageCount < Model.ClientList.PageNumber ? 0 : Model.ClientList.PageNumber) of @Model.ClientList.PageCount</span>
+        <span class="pull-right" style="margin-top: 7px;">
+            Total: @Model.ClientList.TotalItemCount Records
+        </span>
+    </p>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Client Nmae", "Index",
+               new
+               {
+                   Model.page,
+                   Model.ClientName,
+                   SortParameter = Model.NameSortParameter
+               })
+            </th>
+            <th>
+                @Html.ActionLink("Accounts", "Index",
+               new
+               {
+                   Model.page,
+                   Model.ClientName,
+                   SortParameter = Model.AccountsSortParameter
+               })
+            </th>
+            <th>
+                @Html.ActionLink("Total Balance", "Index",
+               new
+               {
+                   Model.page,
+                   Model.ClientName,
+                   SortParameter = Model.AccountTotalSortParameter
+               })
+            </th>            
+            <th>
+                @Html.ActionLink("Created Date", "Index",
+               new
+               {
+                   Model.page,
+                   Model.CreatedDate,
+                   SortParameter = Model.CreatedDateSortParameter
+               })
+            </th>
+            <th>
+                @Html.ActionLink("Modified Dated", "Index",
+               new
+               {
+                   Model.page,
+                   Model.ModifiedDate,
+                   SortParameter = Model.ModifiedDateSortParameter
+               })
+            </th>
+            <th>                
+            </th>
+        </tr>
+
+        @foreach (var item in Model.ClientList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Accounts)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ClientId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ClientId }, htmlAttributes: new { target = "_blank" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ClientId })
+                </td>
+            </tr>
+        }
+
+    </table>    
+    <div class="ListPager">
+        @Html.PagedListPager(Model.ClientList, page => Url.Action("Index", new { page, Model.ClientName, Model.SortParameter }))  
+    </div>
+</div>

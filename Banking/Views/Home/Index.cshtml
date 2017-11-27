@@ -1,0 +1,28 @@
+﻿<div ng-controller="HomeController">
+    <div class="jumbotron">
+        <h2>Banking POC</h2>
+        <p class="lead">A simple transaction processing framework. The framework will receive input via a web service and process those requests based on some simple rules.</p>
+        <div class="row">
+            <button class="btn btn-primary btn-lg" ng-click="fn.StartDemo();" ng-show="model.isRun == undefined">Run random function</button>
+            <div ng-show="model.isRun != undefined">
+                <button class="btn btn-primary btn-lg" ng-click="fn.StopDemo();">Stop random function</button>
+                <span ng-show="model.isRun != undefined">
+                    Running random functions every 1 seccond.
+                </span>
+                <br />
+                <button class="btn btn-primary btn-lg" ng-click="fn.OpenClients();">Open clients windows</button>
+                <span>Open Windows and check transfer works properly.</span>
+            </div>
+        </div>        
+    </div>
+    
+    <div id="message" style="overflow-y:auto;height:300px;">
+        <ul id="messages" style="padding-bottom:30px;"></ul>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">var rootPath = '@Url.Content("~")'</script>
+    <!--Angular script to update the client page and send messages.-->
+    <script src="~/App/Controllers/HomeController.js"></script>
+}
